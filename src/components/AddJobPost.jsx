@@ -118,10 +118,79 @@ const AddJobPost = () => {
       console.log("Error:", error);
     }
   };
-  console.log("Data", data)
+  console.log("Data", data);
 
   return (
-    <div> Add job post</div>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-6">Post Job Vacancy</h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <label className="block text-sm font-medium mb-1">Job Role</label>
+          <input
+            type="text"
+            value={data.jobroles}
+            onChange={(e) => handleOnChange("jobroles", e.target.value)}
+            className="w-full border px-3 py-2 rounded"
+            placeholder="Enter job role"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Company</label>
+          <input
+            type="text"
+            value={data.company}
+            onChange={(e) => handleOnChange("company", e.target.value)}
+            className="w-full border px-3 py-2 rounded"
+            placeholder="Enter company name"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Category</label>
+          <input
+            type="text"
+            value={data.category}
+            onChange={(e) => handleOnChange("category", e.target.value)}
+            className="w-full border px-3 py-2 rounded"
+            placeholder="Enter job category"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Location</label>
+          <input
+            type="text"
+            value={data.location}
+            onChange={(e) => handleOnChange("location", e.target.value)}
+            className="w-full border px-3 py-2 rounded"
+            placeholder="Enter job location"
+          />
+        </div>
+      </div>
+
+      <div className="mb-6">
+        <label className="block text-sm font-medium mb-1">Description</label>
+        <textarea
+          value={data.jobdescription}
+          onChange={(e) => handleOnChange("jobdescription", e.target.value)}
+          rows="5"
+          className="w-full border px-3 py-2 rounded"
+          placeholder="Describe the job role..."
+        />
+      </div>
+
+      <div className="flex justify-between">
+        <button className="text-sm underline text-gray-600">← Back</button>
+        <button
+          onClick={handleSubmit}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
   );
 };
 
