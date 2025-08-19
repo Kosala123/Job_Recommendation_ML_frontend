@@ -1,16 +1,34 @@
-import React from "react";
+// user login part
+
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
-  // const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
 
-  // const handleLogin = (e) => {
-  //   e.preventDefault(); // prevent page reload
-  //   navigate("/"); // go to homepage (adjust path if needed)
-  // };
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+
+    setData((preve) => {
+      return {
+        ...preve,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
+  console.log("data", data);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-100 via-blue-50 to-blue-100">
+    <div className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-br from-gray-100 via-blue-50 to-blue-100">
       <div className="bg-white p-10 rounded-xl shadow-md w-full max-w-md">
         <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">
           Login to Skill Bridge
@@ -21,6 +39,9 @@ const Login = () => {
             <label className="block text-gray-700 mb-2">Email</label>
             <input
               type="email"
+              name="email"
+              value={data.email}
+              onChange={handleOnChange}
               placeholder="Enter your email"
               className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
@@ -28,16 +49,29 @@ const Login = () => {
 
           <div className="mb-6">
             <label className="block text-gray-700 mb-2">Password</label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
+            <div className="flex items-center border border-gray-300 rounded focus-within:ring-2 focus-within:ring-blue-400">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                name="password"
+                value={data.password}
+                onChange={handleOnChange}
+                className="w-full px-4 py-2 rounded-l focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="px-3 text-gray-600 hover:text-gray-800 focus:outline-none"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </div>
-
+          
           <button
+            onClick={handleSubmit}
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-800 transition"
           >
             Login
           </button>
