@@ -58,7 +58,7 @@ const RightSide = () => {
         </NavLink>
 
         <NavLink
-          // onClick={adminhandleLogout}
+          onClick={adminhandleLogout}
           // to={"/logout"}
           className="flex items-center gap-3 bg-red-500 hover:bg-red-600 text-white font-medium py-3 mt-5 px-6 rounded transition"
         >
