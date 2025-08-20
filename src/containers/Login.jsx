@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,6 +12,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +28,27 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/signin`,
+        data,
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        toast.success(response.data.message);
+        localStorage.setItem("userId", response?.data?.details._id);
+        navigate("/dashbord");
+      }
+
+      if (response.data.error) {
+        toast.error(response.data.message);
+      }
+      console.log("Update response:", response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
   console.log("data", data);
 
@@ -67,7 +92,7 @@ const Login = () => {
               </button>
             </div>
           </div>
-          
+
           <button
             onClick={handleSubmit}
             type="submit"

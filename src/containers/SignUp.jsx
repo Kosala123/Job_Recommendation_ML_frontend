@@ -1,8 +1,10 @@
 // User register
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +15,8 @@ const SignUp = () => {
     password: "",
     confirmpassword: "",
   });
+
+  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -27,6 +31,31 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (data.password === data.confirmpassword) {
+      try {
+        const response = await axios.post(
+          `http://localhost:8000/api/signup`,
+          data,
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.data.success) {
+          toast.success(response.data.message);
+          navigate("/");
+        }
+
+        if (response.data.error) {
+          toast.error(response.data.message);
+        }
+
+        // console.log("Update response:", response);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    } else {
+      console.log("Please check password and confirm password");
+    }
   };
   console.log("data", data);
 
@@ -46,6 +75,7 @@ const SignUp = () => {
               value={data.name}
               onChange={handleOnChange}
               placeholder="Enter your full name"
+              required
               className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
             />
           </div>
@@ -58,6 +88,7 @@ const SignUp = () => {
               value={data.email}
               onChange={handleOnChange}
               placeholder="Enter your email"
+              required
               className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
             />
           </div>
@@ -71,6 +102,7 @@ const SignUp = () => {
                 name="password"
                 value={data.password}
                 onChange={handleOnChange}
+                required
                 className="w-full px-4 py-2 rounded-l focus:outline-none"
               />
               <button
@@ -93,6 +125,7 @@ const SignUp = () => {
                 name="confirmpassword"
                 value={data.confirmpassword}
                 onChange={handleOnChange}
+                required
                 className="w-full px-4 py-2 rounded-l focus:outline-none"
               />
               <button
@@ -106,6 +139,7 @@ const SignUp = () => {
           </div>
 
           <button
+            onClick={handleSubmit}
             type="submit"
             className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition"
           >

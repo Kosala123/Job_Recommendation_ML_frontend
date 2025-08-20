@@ -1,3 +1,5 @@
+//  This file should be the right side file, I create wrong way
+
 import React from "react";
 import { Route, Router, Routes } from "react-router-dom";
 import { AddJobPost, Addqualifications, Welcome } from "../components";
