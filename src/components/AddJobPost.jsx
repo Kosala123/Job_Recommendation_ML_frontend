@@ -86,6 +86,8 @@
 
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddJobPost = () => {
   const initialData = {
@@ -96,6 +98,7 @@ const AddJobPost = () => {
     jobdescription: "",
   };
 
+  const navigate = useNavigate();
   const [data, setData] = useState(initialData);
 
   const handleOnChange = (field, value) => {
@@ -112,6 +115,16 @@ const AddJobPost = () => {
         `http://localhost:8000/api/add-jobpost`,
         data
       );
+
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate("/dashbord");
+      }
+
+      if (response.data.error) {
+        toast.error(response.data.message);
+      }
+
       console.log("response", response);
       setData(initialData);
     } catch (error) {

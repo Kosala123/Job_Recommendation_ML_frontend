@@ -9,30 +9,30 @@ import { toast } from "react-toastify";
 
 const RightSide = () => {
   // const dispach = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // const adminhandleLogout = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "http://localhost:8000/api/adminLogout",
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     );
+  const userhandleLogout = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/api/userLogout",
+        {
+          withCredentials: true,
+        }
+      );
 
-  //     if (response.data.success) {
-  //       toast.success(response.data.message);
-  //       // dispach(setAdminDetails(null));
-  //       navigate("/");
-  //     }
+      if (response.data.success) {
+        localStorage.clear();
+        toast.success(response.data.message);
+        navigate("/");
+      }
 
-  //     if (response.data.error) {
-  //       toast.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.log("cannot log out student", error);
-  //   }
-  // };
+      if (response.data.error) {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log("cannot log out student", error);
+    }
+  };
 
   return (
     <div className="w-[250px] bg-gray-100 h-full p-2 border-r border-gray-300">
@@ -58,7 +58,7 @@ const RightSide = () => {
         </NavLink>
 
         <NavLink
-          onClick={adminhandleLogout}
+          onClick={userhandleLogout}
           // to={"/logout"}
           className="flex items-center gap-3 bg-red-500 hover:bg-red-600 text-white font-medium py-3 mt-5 px-6 rounded transition"
         >
