@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Addqualifications = () => {
+  // Get the _id from local storage
+  const id = localStorage.getItem("userId");
+
+  // Get user data
+  const [userData, setUserData] = useState([]);
+
   const initialData = {
     jobroles: "",
     company: "",
@@ -22,14 +30,58 @@ const Addqualifications = () => {
     }));
   };
 
+  // fetch user details
+  const fetchUserData = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/user-profile/${id}`
+      );
+      console.log("User data", res.data);
+      setUserData(res.data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchUserData();
+  }, [id]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!selectedFile) {
+      toast.error("Please select a file before submitting");
+      return;
+    }
+
     try {
-      // const response = await axios.post(
-      //   `http://localhost:8000/api/add-jobpost`,
-      //   data
-      // );
-      // console.log("response", response);
+      const formData = new FormData();
+      formData.append("cv_files", selectedFile);
+
+      const response = await axios.post(
+        `http://localhost:8000/api/add-userprofile/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.data) {
+        toast.success(response.data.message || "CV uploaded successfully!");
+        setSelectedFile(null);
+        // Log relevant details from the saved user profile
+        // const savedData = response.data.data;
+        // console.log("CV Upload Details:");
+        // console.log("File Name:", savedData.fileName);
+        // console.log("File Type:", savedData.fileType);
+        // console.log("File Path:", savedData.filePath);
+        // console.log("Full Name:", savedData.fullName);
+        // console.log("Email:", savedData.email);
+      }
+
+      console.log("response", response);
       setData(initialData);
     } catch (error) {
       console.log("Error:", error);
@@ -64,6 +116,7 @@ const Addqualifications = () => {
             </p>
           )}
           <button
+            onClick={handleSubmit}
             // onClick={() => navigate("/job-matching")}
             className="mt-4 bg-green-600 text-white px-4 py-2 rounded"
           >
