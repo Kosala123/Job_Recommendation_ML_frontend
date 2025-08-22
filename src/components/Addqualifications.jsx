@@ -69,16 +69,13 @@ const Addqualifications = () => {
       );
 
       if (response.data) {
-        toast.success(response.data.message || "CV uploaded successfully!");
-        setSelectedFile(null);
-        // Log relevant details from the saved user profile
-        // const savedData = response.data.data;
-        // console.log("CV Upload Details:");
-        // console.log("File Name:", savedData.fileName);
-        // console.log("File Type:", savedData.fileType);
-        // console.log("File Path:", savedData.filePath);
-        // console.log("Full Name:", savedData.fullName);
-        // console.log("Email:", savedData.email);
+        try {
+          
+          toast.success(response.data.message || "CV uploaded successfully!");
+          setSelectedFile(null);
+        } catch (error) {
+          setSelectedFile(null);
+        }
       }
 
       console.log("response", response);
@@ -89,9 +86,9 @@ const Addqualifications = () => {
   };
 
   // Function to handle showing placeholders
-  const handleManualEntryClick = () => {
-    setShowPlaceholders(true);
-  };
+  // const handleManualEntryClick = () => {
+  //   setShowPlaceholders(true);
+  // };
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
@@ -131,8 +128,9 @@ const Addqualifications = () => {
             Enter your qualifications manually.
           </p>
           <button
-            onClick={handleManualEntryClick}
-            // onClick={() => navigate("/qulificationform")}
+            // onClick={handleManualEntryClick}
+            onClick={() => navigate("/dashbord/qualificationform")}
+            // onClick={() => navigate("/dashboard/qualificationform")}
             className="bg-blue-600 text-white px-4 py-2 rounded w-full"
           >
             Add Professional Background & Qualification
@@ -140,7 +138,7 @@ const Addqualifications = () => {
         </div>
 
         {/* Placeholder inputs shown after button click */}
-        {showPlaceholders && (
+        {/* {showPlaceholders && (
           <div className="mt-8 space-y-4">
             {[1, 2, 3, 4, 5].map((index) => (
               <input
@@ -151,7 +149,7 @@ const Addqualifications = () => {
               />
             ))}
           </div>
-        )}
+        )} */}
       </div>
 
       <button

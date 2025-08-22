@@ -14,7 +14,7 @@ function App() {
         <Route path="/*" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashbord/*" element={<Dashbord />} />
-        <Route path="/qualificationform" element={<QualifiacationFormPage />} />
+        {/* <Route path="/qualificationform" element={<QualifiacationFormPage />} /> */}
       </Routes>
     </div>
     // </BrowserRouter>
