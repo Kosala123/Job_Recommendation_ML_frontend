@@ -18,6 +18,8 @@ const Addqualifications = () => {
     jobdescription: "",
   };
   const [data, setData] = useState(initialData);
+  // Get student data
+  const [modelData, setModelData] = useState([]);
 
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
@@ -67,12 +69,29 @@ const Addqualifications = () => {
           },
         }
       );
+      console.log("first", response.data);
 
       if (response.data) {
         try {
-          
           toast.success(response.data.message || "CV uploaded successfully!");
           setSelectedFile(null);
+
+          // Trigger training
+          try {
+            const res = await axios.get(
+              `http://localhost:8000/api/read-user-profile/${id}`,
+              { timeout: 180000 } // 3 minutes
+            );
+            setModelData(res.data);
+
+            console.log("backend message", res.data.message);
+            // Show the backend training message
+            if (res.data.message) {
+              toast.success(res.data.message || "Successfully!");
+            }
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
         } catch (error) {
           setSelectedFile(null);
         }
