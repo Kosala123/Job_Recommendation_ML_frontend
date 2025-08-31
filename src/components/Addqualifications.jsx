@@ -87,7 +87,8 @@ const Addqualifications = () => {
             console.log("backend message", res.data.message);
             // Show the backend training message
             if (res.data.message) {
-              toast.success(res.data.message || "Successfully!");
+              // toast.success(res.data.message || "Successfully!");
+              toast.success(res.data.message, { toastId: "training-message" });
             }
           } catch (error) {
             console.error("Error fetching data:", error);
