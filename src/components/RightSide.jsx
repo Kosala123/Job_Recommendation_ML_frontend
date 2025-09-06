@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FaPlusCircle, FaBriefcase, FaSignOutAlt } from "react-icons/fa"; // Icons
 import axios from "axios";
 import { toast } from "react-toastify";
+import { RiGalleryView2 } from "react-icons/ri";
 // import { useDispatch } from "react-redux";
 
 const RightSide = () => {
@@ -13,12 +14,9 @@ const RightSide = () => {
 
   const userhandleLogout = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8000/api/userLogout",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get("http://localhost:8000/api/userLogout", {
+        withCredentials: true,
+      });
 
       if (response.data.success) {
         localStorage.clear();
@@ -55,6 +53,14 @@ const RightSide = () => {
         >
           <FaBriefcase />
           Post Job Vacancies
+        </NavLink>
+
+        <NavLink
+          to={"/dashbord/viewresults"}
+          className="flex items-center gap-3 bg-indigo-600 hover:bg-indigo-800 text-white font-medium py-3 mt-5 px-6 rounded transition"
+        >
+          <RiGalleryView2 />
+          View Result
         </NavLink>
 
         <NavLink

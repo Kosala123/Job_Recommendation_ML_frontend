@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Route, Router, Routes } from "react-router-dom";
-import { AddJobPost, Addqualifications, Welcome } from "../components";
+import { AddJobPost, Addqualifications, ViewResults, Welcome } from "../components";
 import QualifiacationFormPage from "./QualifiacationFormPage";
 
 const LeftSide = () => {
@@ -14,6 +14,7 @@ const LeftSide = () => {
           <Route path="/addjobpost" element={<AddJobPost />} />
           <Route path="/addqualification" element={<Addqualifications />} />
           <Route path="/qualificationform" element={<QualifiacationFormPage />} />
+          <Route path="/viewresults" element={<ViewResults />} />
         </Routes>
       </div>
     </div>
